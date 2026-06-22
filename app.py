@@ -92,5 +92,3 @@ if groq_key:
                     
                 except Exception as e:
                     st.error(f"An error occurred while communicating with the AI: {e}")
-                except Exception as e:
-                    st.error(f"An error occurred while communicating with the AI: {e}")
