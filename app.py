@@ -17,9 +17,10 @@ st.write("Powered by Groq ultra-fast inference engine. Instant expert-level feed
 # 🔥 YOUR GROQ API KEY IS SAFELY CONFIGURED HERE
 # =========================================================================
 openai_key = st.secrets["OPENAI_API_KEY"]
+groq_key = openai_key
 # =========================================================================
 
-if openai_key:
+if groq_key:
     # User Input Forms
     topic = st.text_area(
         "1. Enter IELTS Writing Task 2 Topic:", 
