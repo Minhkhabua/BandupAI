@@ -16,7 +16,7 @@ st.subheader("Professional AI-Powered IELTS Writing Evaluator")
 st.write("Powered by Groq ultra-fast inference engine. Instant expert-level feedback.")
 
 # =========================================================================
-# 🔥 BẢO MẬT: Lấy Groq API Key ẩn từ Streamlit Secrets
+# 🔥 ĐỒNG BỘ CHUẨN: Lấy đúng biến GROQ_API_KEY từ Streamlit Secrets
 # =========================================================================
 groq_key = st.secrets["GROQ_API_KEY"]
 # =========================================================================
@@ -39,7 +39,7 @@ if groq_key:
         else:
             with st.spinner("AI Examiner is analyzing your essay and generating feedback..."):
                 try:
-                    # Khởi tạo client Groq chính thức (Không lo sai URL endpoint)
+                    # Khởi tạo client Groq chính thức từ khóa GROQ_API_KEY
                     client = Groq(
                         api_key=groq_key,
                     )
@@ -76,7 +76,7 @@ if groq_key:
                     **Student's Essay:** {essay}
                     """
                     
-                    # Gọi mô hình Llama 3.3 siêu tốc
+                    # Gọi mô hình Llama 3.3 siêu tốc của Groq
                     response = client.chat.completions.create(
                         model="llama-3.3-70b-versatile",
                         messages=[
