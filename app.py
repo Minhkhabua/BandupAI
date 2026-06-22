@@ -13,15 +13,15 @@ st.set_page_config(page_title="BandUp AI - IELTS Coach", page_icon="📝", layou
 
 st.title("📝 BandUp AI v3.0")
 st.subheader("Professional AI-Powered IELTS Writing Evaluator")
-st.write("Powered by OpenAI API engine. Instant expert-level feedback.")
+st.write("Powered by Groq ultra-fast inference engine. Instant expert-level feedback.")
 
 # =========================================================================
-# 🔥 BẢO MẬT: Lấy API Key ẩn từ Streamlit Secrets (Không bị quét khóa mã)
+# 🔥 BẢO MẬT: Lấy Groq API Key ẩn từ Streamlit Secrets
 # =========================================================================
-openai_key = st.secrets["OPENAI_API_KEY"]
+groq_key = st.secrets["GROQ_API_KEY"]
 # =========================================================================
 
-if openai_key:
+if groq_key:
     # User Input Forms
     topic = st.text_area(
         "1. Enter IELTS Writing Task 2 Topic:", 
@@ -39,9 +39,10 @@ if openai_key:
         else:
             with st.spinner("AI Examiner is analyzing your essay and generating feedback..."):
                 try:
-                    # Khởi tạo client OpenAI sử dụng mã bảo mật
+                    # Khởi tạo client kết nối đến cổng OpenAI-compatible của Groq
                     client = OpenAI(
-                        api_key=openai_key,
+                        api_key=groq_key,
+                        base_url="https://api.groq.com/v1"
                     )
                     
                     # Optimized English-only prompt for global standard evaluation
@@ -76,9 +77,9 @@ if openai_key:
                     **Student's Essay:** {essay}
                     """
                     
-                    # Gọi mô hình của OpenAI chạy ổn định nhất
+                    # Gọi mô hình Llama 3.3 mã nguồn mở mạnh mẽ và miễn phí trên Groq
                     response = client.chat.completions.create(
-                        model="gpt-4o-mini",
+                        model="llama-3.3-70b-versatile",
                         messages=[
                             {"role": "user", "content": prompt}
                         ]
@@ -89,9 +90,6 @@ if openai_key:
                     st.success("🎉 Evaluation Completed successfully!")
                     st.markdown("---")
                     st.markdown(response.choices[0].message.content)
-                    
-                except Exception as e:
-                    st.error(f"An error occurred while communicating with the AI: {e}")
                     
                 except Exception as e:
                     st.error(f"An error occurred while communicating with the AI: {e}")
