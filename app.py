@@ -1,5 +1,5 @@
 import streamlit as st
-from openai import OpenAI
+from groq import Groq
 
 # Tích hợp mã theo dõi Novus.ai theo đúng yêu cầu ban tổ chức
 st.components.v1.html("""
@@ -39,10 +39,9 @@ if groq_key:
         else:
             with st.spinner("AI Examiner is analyzing your essay and generating feedback..."):
                 try:
-                    # Khởi tạo client kết nối đến cổng chuẩn của Groq (Đã sửa lỗi 404)
-                    client = OpenAI(
+                    # Khởi tạo client Groq chính thức (Không lo sai URL endpoint)
+                    client = Groq(
                         api_key=groq_key,
-                        base_url="https://api.groq.com/openai"
                     )
                     
                     # Optimized English-only prompt for global standard evaluation
@@ -77,7 +76,7 @@ if groq_key:
                     **Student's Essay:** {essay}
                     """
                     
-                    # Gọi mô hình Llama 3.3 mã nguồn mở mạnh mẽ và miễn phí trên Groq
+                    # Gọi mô hình Llama 3.3 siêu tốc
                     response = client.chat.completions.create(
                         model="llama-3.3-70b-versatile",
                         messages=[
