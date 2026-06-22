@@ -1,6 +1,7 @@
 import streamlit as st
 from openai import OpenAI
 
+# Tích hợp mã theo dõi Novus.ai theo đúng yêu cầu ban tổ chức
 st.components.v1.html("""
 <script>
   console.log("Novus.ai tracking script successfully active.");
@@ -15,9 +16,9 @@ st.subheader("Professional AI-Powered IELTS Writing Evaluator")
 st.write("Powered by OpenAI API engine. Instant expert-level feedback.")
 
 # =========================================================================
-# 🔥 ĐÃ CẤU HÌNH KEY CỦA BẠN TRỰC TIẾP TẠI ĐÂY
+# 🔥 BẢO MẬT: Lấy API Key ẩn từ Streamlit Secrets (Không bị quét khóa mã)
 # =========================================================================
-openai_key = "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"
+openai_key = st.secrets["OPENAI_API_KEY"]
 # =========================================================================
 
 if openai_key:
@@ -38,7 +39,7 @@ if openai_key:
         else:
             with st.spinner("AI Examiner is analyzing your essay and generating feedback..."):
                 try:
-                    # Khởi tạo client kết nối trực tiếp đến OpenAI thay vì Groq
+                    # Khởi tạo client OpenAI sử dụng mã bảo mật
                     client = OpenAI(
                         api_key=openai_key,
                     )
@@ -75,7 +76,7 @@ if openai_key:
                     **Student's Essay:** {essay}
                     """
                     
-                    # Gọi mô hình của OpenAI (Thay vì Llama3 của Groq)
+                    # Gọi mô hình của OpenAI chạy ổn định nhất
                     response = client.chat.completions.create(
                         model="gpt-4o-mini",
                         messages=[
@@ -83,11 +84,14 @@ if openai_key:
                         ]
                     )
                     
-                    # Celebration effect upon completion
+                    # Hiệu ứng ăn mừng khi chấm điểm xong
                     st.balloons()
                     st.success("🎉 Evaluation Completed successfully!")
                     st.markdown("---")
                     st.markdown(response.choices[0].message.content)
+                    
+                except Exception as e:
+                    st.error(f"An error occurred while communicating with the AI: {e}")
                     
                 except Exception as e:
                     st.error(f"An error occurred while communicating with the AI: {e}")
