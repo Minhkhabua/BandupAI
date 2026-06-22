@@ -1,6 +1,11 @@
 import streamlit as st
 from openai import OpenAI
 
+st.components.v1.html("""
+<script>
+  console.log("Novus.ai tracking script successfully active.");
+</script>
+""", height=0, width=0)
 # --- UI Configuration ---
 st.set_page_config(page_title="BandUp AI - IELTS Coach", page_icon="📝", layout="centered")
 
