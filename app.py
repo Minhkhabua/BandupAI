@@ -6,21 +6,21 @@ st.components.v1.html("""
   console.log("Novus.ai tracking script successfully active.");
 </script>
 """, height=0, width=0)
+
 # --- UI Configuration ---
 st.set_page_config(page_title="BandUp AI - IELTS Coach", page_icon="📝", layout="centered")
 
 st.title("📝 BandUp AI v3.0")
 st.subheader("Professional AI-Powered IELTS Writing Evaluator")
-st.write("Powered by Groq ultra-fast inference engine. Instant expert-level feedback.")
+st.write("Powered by OpenAI API engine. Instant expert-level feedback.")
 
 # =========================================================================
-# 🔥 YOUR GROQ API KEY IS SAFELY CONFIGURED HERE
+# 🔥 ĐÃ CẤU HÌNH KEY CỦA BẠN TRỰC TIẾP TẠI ĐÂY
 # =========================================================================
-openai_key = st.secrets["OPENAI_API_KEY"]
-groq_key = openai_key
+openai_key = "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"
 # =========================================================================
 
-if groq_key:
+if openai_key:
     # User Input Forms
     topic = st.text_area(
         "1. Enter IELTS Writing Task 2 Topic:", 
@@ -38,10 +38,9 @@ if groq_key:
         else:
             with st.spinner("AI Examiner is analyzing your essay and generating feedback..."):
                 try:
-                    # Initialize OpenAI client with Groq base URL
+                    # Khởi tạo client kết nối trực tiếp đến OpenAI thay vì Groq
                     client = OpenAI(
-                        base_url="https://api.groq.com/openai/v1",
-                        api_key=groq_key,
+                        api_key=openai_key,
                     )
                     
                     # Optimized English-only prompt for global standard evaluation
@@ -76,9 +75,9 @@ if groq_key:
                     **Student's Essay:** {essay}
                     """
                     
-                    # Invoke Llama 3.3 model
+                    # Gọi mô hình của OpenAI (Thay vì Llama3 của Groq)
                     response = client.chat.completions.create(
-                        model="llama-3.3-70b-versatile",
+                        model="gpt-4o-mini",
                         messages=[
                             {"role": "user", "content": prompt}
                         ]
