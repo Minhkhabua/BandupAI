@@ -39,10 +39,10 @@ if groq_key:
         else:
             with st.spinner("AI Examiner is analyzing your essay and generating feedback..."):
                 try:
-                    # Khởi tạo client kết nối đến cổng OpenAI-compatible của Groq
+                    # Khởi tạo client kết nối đến cổng chuẩn của Groq (Đã sửa lỗi 404)
                     client = OpenAI(
                         api_key=groq_key,
-                        base_url="https://api.groq.com/v1"
+                        base_url="https://api.groq.com/openai"
                     )
                     
                     # Optimized English-only prompt for global standard evaluation
